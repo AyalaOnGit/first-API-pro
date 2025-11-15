@@ -1,5 +1,5 @@
-﻿const welcomeText = document.querySelector(".good")
-welcomeText.innerHTML = `שלום ${JSON.parse(sessionStorage.getItem('currentUser')).userFirstName} <br> התחברת בהצלחה!!!`
+﻿const welcomeText = document.querySelector(".greeting")
+welcomeText.innerHTML = `שלום ${JSON.parse(sessionStorage.getItem('currentUser')).userFirstName} <br> !התחברת בהצלחה`
 
 const updateBox = document.querySelector(".updateBox")
 const updateUser = document.querySelector(".updateUser")
@@ -50,7 +50,7 @@ const update = async () => {
         if (response.ok) {
             alert(" עודכן בהצלחה")
             sessionStorage.setItem("currentUser", JSON.stringify(updateUser))
-            welcomeText.innerHTML = `שלום ${JSON.parse(sessionStorage.getItem('currentUser')).UserFirstName} <br> התחברת בהצלחה!!!`
+            welcomeText.innerHTML = `שלום ${JSON.parse(sessionStorage.getItem('currentUser')).UserFirstName} <br> !התחברת בהצלחה`
         }
 
         else {

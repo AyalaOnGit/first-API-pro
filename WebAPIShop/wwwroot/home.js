@@ -4,8 +4,13 @@ const lastName = document.querySelector("#lastName")
 const password = document.querySelector("#password")
 const show = document.querySelector(".show");
 show.style.display = "none"
-show.style.height = "20px"
-//show.style.backgroundColor = "green"
+
+function toggleForms() {
+    const newUser = document.querySelector('.newUser');
+    const existUser = document.querySelector('.existUser');
+    newUser.classList.toggle('hidden');//מחליף את ההגדרה של ה קלאס שתיהיה מוסתרת או גלויה ברגע שלוחצים מחליף בינהם אם היתה מוסתרת תיהיה גלויה והשני להיפך - ולהיפך
+    existUser.classList.toggle('hidden');
+}
 function validateEmail(email) {
     return email.includes("@") && email.includes(".");
 }
@@ -28,9 +33,7 @@ const CheckPassword = async () => {
         });
         if (response.ok) {
             const thePassword = await response.json();
-            alert(thePassword.level);//////////////////////
             return thePassword
-            //ShowSrength(thePassword.level)
         }
         else {
             alert("בדיקת הססמא אינה עובדת כעת, מצטערים😒");
@@ -77,13 +80,12 @@ const register = async () => {
             }
             else {
                 const dataPost = await response.json();
-                alert("💕 נרשמת בהצלחה")
+                alert("הרשמתך נקלטה בהצלחה")
             }
     } catch (err) {
         alert(err)
     }
 }
-
 
 
 const loginUserEmail = document.querySelector("#userNameR")
@@ -102,12 +104,12 @@ const login = async () => {
             },
             body: JSON.stringify(loginUser)
         });
-        if (response.status == 204) {   /////
-            alert(" 😒 אתה עדייין לא קיים במערכת נא הרשם")
+        if (response.status == 204) { 
+            alert("אינך קיים במערכת נא הרשם")
         }
 
         else {
-            alert("💕  התחברת בהצלחה")
+            alert("התחברת בהצלחה")
             const currentUser = await response.json();
             sessionStorage.setItem("currentUser", JSON.stringify(currentUser))
             window.location.href = "update.html"
@@ -115,8 +117,6 @@ const login = async () => {
     } catch (err) {
         alert(err)
     }
-
-
 }
 
 
