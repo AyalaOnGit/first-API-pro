@@ -8,12 +8,17 @@ namespace WebAPIShop.Controllers
 {
     public class PasswordController : Controller
     {
-        PasswordService service = new PasswordService();
+        IPasswordService _passwordService;
+
+        public PasswordController(IPasswordService passwordService)
+        {
+            _passwordService = passwordService;
+        }
 
         [Route("api/[controller]")]
         public ActionResult<Password> Post( [FromBody] Password password)
         {
-            password = service.CheckPassword(password.ThePassword);
+            password = _passwordService.CheckPassword(password.ThePassword);
             return Ok(password);
         }
     }

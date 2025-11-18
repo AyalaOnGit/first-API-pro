@@ -3,10 +3,10 @@ using Entitys;
 
 namespace Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
 
-        string filePath = "D:\\סופי\\users.txt";
+        string filePath = "D:\\New folder\\סופי\\users.txt";
         //string filePath = "M:\\WebApi\\סופי\\users.txt";
         // string filePath = "C:\\Users\\user\\Desktop\\daf.txt";
 
@@ -15,8 +15,9 @@ namespace Repository
         //    return new string[] { "value1", "value2" };
         //}
 
-        public User GetUserById(int id) { 
-      
+        public User GetUserById(int id)
+        {
+
             using (StreamReader reader = System.IO.File.OpenText(filePath))
             {
                 string? currentUserInFile;
@@ -30,8 +31,8 @@ namespace Repository
             return null;   /////
         }
 
-    
-        public User AddUser( User user)
+
+        public User AddUser(User user)
         {
             int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
             user.UserId = numberOfUsers + 1;
@@ -42,7 +43,7 @@ namespace Repository
 
 
 
-        public User Login (LoginUser UserR)
+        public User Login(LoginUser UserR)
         {
 
             using (StreamReader reader = System.IO.File.OpenText(filePath))
@@ -59,7 +60,7 @@ namespace Repository
         }
 
 
-        public void UpdateUser(int id,User value)
+        public void UpdateUser(int id, User value)
         {
             string textToReplace = string.Empty;
             using (StreamReader reader = System.IO.File.OpenText(filePath))
@@ -83,7 +84,7 @@ namespace Repository
 
         }
 
-  
+
         public void DeleteUser(int id)
         {
         }

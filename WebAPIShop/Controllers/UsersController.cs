@@ -20,12 +20,16 @@ namespace WebAPIShop.Controllers
         //{
         //    return new string[] { "value1", "value2" };
         //}
-        UserService server= new UserService();
+        IUserService _userServicen;
+        public UsersController(IUserService userServicen)
+        {
+            _userServicen = userServicen;
+        }
 
         [HttpGet("{id}")]
         public ActionResult<User> Get(int id) 
         {
-            User user = server.GetUserById(id);
+            User user = _userServicen.GetUserById(id);
             if(user!= null)
             {
                 return Ok(user);
@@ -36,7 +40,7 @@ namespace WebAPIShop.Controllers
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
-            User creatUser = server.AddUser(user);
+            User creatUser = _userServicen.AddUser(user);
             if(creatUser!=null)
                 return CreatedAtAction(nameof(Get), new{id = user.UserId}, user);
             return BadRequest("not good password");
@@ -46,7 +50,7 @@ namespace WebAPIShop.Controllers
         [HttpPost("login")]
         public ActionResult<User> Post([FromBody] LoginUser userR)
         {
-            User logUser = server.Login(userR);
+            User logUser = _userServicen.Login(userR);
             if (logUser != null)
             {
                 return CreatedAtAction(nameof(Get), new { id = logUser.UserId }, logUser);
@@ -57,7 +61,7 @@ namespace WebAPIShop.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User value)
         {
-            bool res=server.UpdateUser(id,value);
+            bool res= _userServicen.UpdateUser(id,value);
             if (!res)
             {
                 return BadRequest("not good update password");
@@ -68,7 +72,7 @@ namespace WebAPIShop.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            server.DeleteUser(id);
+            _userServicen.DeleteUser(id);
         }
     }
 }
