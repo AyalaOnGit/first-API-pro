@@ -6,8 +6,8 @@ using Repository;
 
 public class UserService : IUserService
 {
-    IUserRepository _userRepository;
-    IPasswordService _passwordService;
+    private readonly IUserRepository _userRepository;
+    private readonly IPasswordService _passwordService;
 
     public UserService(IUserRepository userRepository, IPasswordService passwordService)
     {
@@ -27,22 +27,22 @@ public class UserService : IUserService
             return null;
         return _userRepository.AddUser(user);
     }
-    public bool UpdateUser(int id, User value)
+    public bool UpdateUser(int id, User user)
     {
-        Password passwordAfterCheck = _passwordService.CheckPassword(value.UserPassword);
+        Password passwordAfterCheck = _passwordService.CheckPassword(user.UserPassword);
         if (passwordAfterCheck.Level < 3)
         {
             return false;
         }
         else
         {
-            _userRepository.UpdateUser(id, value);
+            _userRepository.UpdateUser(id, user);
             return true;
         }
     }
-    public User Login(LoginUser UserR)
+    public User Login(LoginUser loginUser)
     {
-        return _userRepository.Login(UserR);
+        return _userRepository.Login(loginUser);
     }
     public void DeleteUser(int id)
     {

@@ -7,7 +7,7 @@ namespace Repository
         User AddUser(User user);
         void DeleteUser(int id);
         User GetUserById(int id);
-        User Login(LoginUser UserR);
-        void UpdateUser(int id, User value);
+        User Login(LoginUser loginUser);
+        void UpdateUser(int id, User updatedUser);
     }
 }
