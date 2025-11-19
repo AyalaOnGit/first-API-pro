@@ -15,64 +15,60 @@ namespace WebAPIShop.Controllers
     public class UsersController : ControllerBase
     {
 
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-        IUserService _userServicen;
-        public UsersController(IUserService userServicen)
+        private readonly IUserService _userService;
+        
+        public UsersController(IUserService userService)
         {
-            _userServicen = userServicen;
+            _userService = userService;
         }
 
         [HttpGet("{id}")]
         public ActionResult<User> Get(int id) 
         {
-            User user = _userServicen.GetUserById(id);
+            User user = _userService.GetUserById(id);
             if(user!= null)
             {
                 return Ok(user);
             }
-            return NoContent();
+            return NotFound();
         }
   
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
-            User creatUser = _userServicen.AddUser(user);
-            if(creatUser!=null)
-                return CreatedAtAction(nameof(Get), new{id = user.UserId}, user);
-            return BadRequest("not good password");
+            User createdUser = _userService.AddUser(user);
+            if(createdUser!=null)
+                return CreatedAtAction(nameof(Get), new{id = createdUser.UserId}, createdUser);
+            return BadRequest("Password is not strong enough");
         }
 
 
         [HttpPost("login")]
-        public ActionResult<User> Post([FromBody] LoginUser userR)
+        public ActionResult<User> Login([FromBody] LoginUser loginUser)
         {
-            User logUser = _userServicen.Login(userR);
-            if (logUser != null)
+            User user = _userService.Login(loginUser);
+            if (user != null)
             {
-                return CreatedAtAction(nameof(Get), new { id = logUser.UserId }, logUser);
+                return Ok(user);
             }
-            return NoContent();
+            return Unauthorized();
         }
        
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User value)
+        public IActionResult Put(int id, [FromBody] User user)
         {
-            bool res= _userServicen.UpdateUser(id,value);
-            if (!res)
+            bool isUpdateSuccessful = _userService.UpdateUser(id, user);
+            if (!isUpdateSuccessful)
             {
-                return BadRequest("not good update password");
+                return BadRequest("Password is not strong enough");
             }
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _userServicen.DeleteUser(id);
+            _userService.DeleteUser(id);
         }
     }
 }

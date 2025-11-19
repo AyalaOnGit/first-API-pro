@@ -6,20 +6,22 @@ using Servers;
 
 namespace WebAPIShop.Controllers
 {
-    public class PasswordController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PasswordController : ControllerBase
     {
-        IPasswordService _passwordService;
+        private readonly IPasswordService _passwordService;
 
         public PasswordController(IPasswordService passwordService)
         {
             _passwordService = passwordService;
         }
 
-        [Route("api/[controller]")]
-        public ActionResult<Password> Post( [FromBody] Password password)
+        [HttpPost]
+        public ActionResult<Password> Post([FromBody] Password password)
         {
-            password = _passwordService.CheckPassword(password.ThePassword);
-            return Ok(password);
+            Password result = _passwordService.CheckPassword(password.ThePassword);
+            return Ok(result);
         }
     }
 }
