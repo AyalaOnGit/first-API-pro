@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Servers;
 using Entitys;
+using Repository;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,9 +24,9 @@ namespace WebAPIShop.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id) 
+        public async Task<ActionResult<User>> Get(int id) 
         {
-            User user = _userService.GetUserById(id);
+            User user = await _userService.GetUserById(id);
             if(user!= null)
             {
                 return Ok(user);
@@ -34,9 +35,9 @@ namespace WebAPIShop.Controllers
         }
   
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public async Task<ActionResult<User>> Post([FromBody] User user)
         {
-            User createdUser = _userService.AddUser(user);
+            User createdUser = await _userService.AddUser(user);
             if(createdUser!=null)
                 return CreatedAtAction(nameof(Get), new{id = createdUser.UserId}, createdUser);
             return BadRequest("Password is not strong enough");
@@ -44,20 +45,21 @@ namespace WebAPIShop.Controllers
 
 
         [HttpPost("login")]
-        public ActionResult<User> Login([FromBody] LoginUser loginUser)
+        public  async Task<ActionResult<User>> Login([FromBody] LoginUser loginUser)
         {
-            User user = _userService.Login(loginUser);
+            User user = await _userService.Login(loginUser);
             if (user != null)
             {
                 return Ok(user);
             }
-            return Unauthorized();
+            return NoContent();
+            //return Unauthorized();
         }
        
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User user)
+        public async Task<IActionResult> Put(int id, [FromBody] User user)
         {
-            bool isUpdateSuccessful = _userService.UpdateUser(id, user);
+            bool isUpdateSuccessful = await _userService.UpdateUser(id, user);
             if (!isUpdateSuccessful)
             {
                 return BadRequest("Password is not strong enough");
