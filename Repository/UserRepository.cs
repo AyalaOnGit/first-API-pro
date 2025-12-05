@@ -39,7 +39,11 @@ namespace Repository
         }
 
 
+<<<<<<< HEAD
         public async Task UpdateUser(int id, User updatedUser)
+=======
+        public async void UpdateUser(int id, User updatedUser)
+>>>>>>> 2c52bab78f31f4cd7afa2026053ed949b4fdc19a
         {
             _ShopContext.Users.Update(updatedUser);
             await _ShopContext.SaveChangesAsync();
