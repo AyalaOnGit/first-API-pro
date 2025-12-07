@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Entitys;
 
+
 public partial class db_shopContext : DbContext
 {
     public db_shopContext(DbContextOptions<db_shopContext> options)
@@ -13,6 +14,7 @@ public partial class db_shopContext : DbContext
     {
     }
 
+<<<<<<< HEAD
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
