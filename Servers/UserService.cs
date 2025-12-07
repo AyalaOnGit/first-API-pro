@@ -15,21 +15,21 @@ public class UserService : IUserService
         _passwordService = passwordService;
     }
 
-    public User GetUserById(int id)
+    public async Task<User> GetUserById(int id)
     {
-        return _userRepository.GetUserById(id);
+        return await _userRepository.GetUserById(id);
     }
 
-    public User AddUser(User user)
+    public async Task<User> AddUser(User user)
     {
-        Password passwordAfterCheck = _passwordService.CheckPassword(user.UserPassword);
+        Password passwordAfterCheck = _passwordService.CheckPassword(user.Password);
         if (passwordAfterCheck.Level < 3)
             return null;
-        return _userRepository.AddUser(user);
+        return await _userRepository.AddUser(user);
     }
-    public bool UpdateUser(int id, User user)
+    public async Task<bool> UpdateUser(int id, User user)
     {
-        Password passwordAfterCheck = _passwordService.CheckPassword(user.UserPassword);
+        Password passwordAfterCheck = _passwordService.CheckPassword(user.Password);
         if (passwordAfterCheck.Level < 3)
         {
             return false;
@@ -40,9 +40,9 @@ public class UserService : IUserService
             return true;
         }
     }
-    public User Login(LoginUser loginUser)
+    public async Task<User> Login(LoginUser loginUser)
     {
-        return _userRepository.Login(loginUser);
+        return await _userRepository.Login(loginUser);
     }
     public void DeleteUser(int id)
     {

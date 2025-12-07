@@ -1,18 +1,38 @@
-﻿using Repository;
+﻿using Entitys;
+using Microsoft.EntityFrameworkCore;
+using Repository;
 using Servers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddDbContext<db_shopContext>(option=>option.UseSqlServer
+("Data Source = srv2\\pupils; Initial Catalog = 215806571_shop; Integrated Security = True; Trust Server Certificate=True"));
 
 
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "My API V1");
+    });
+}
 
 // Configure the HTTP request pipeline.
 
