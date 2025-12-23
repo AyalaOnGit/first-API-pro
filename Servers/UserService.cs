@@ -36,7 +36,7 @@ public class UserService : IUserService
         }
         else
         {
-            _userRepository.UpdateUser(id, user);
+            await _userRepository.UpdateUser(id, user);
             return true;
         }
     }
@@ -44,9 +44,9 @@ public class UserService : IUserService
     {
         return await _userRepository.Login(loginUser);
     }
-    public void DeleteUser(int id)
+    public async Task<bool> DeleteUser(int id)
     {
-        _userRepository.DeleteUser(id);
+        return await _userRepository.DeleteUser(id);
     }
 
 }

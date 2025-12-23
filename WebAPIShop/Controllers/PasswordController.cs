@@ -18,7 +18,7 @@ namespace WebAPIShop.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Password> Post([FromBody] Password password)
+        public async Task<ActionResult<Password>> Post([FromBody] Password password)
         {
             Password result = _passwordService.CheckPassword(password.ThePassword);
             return Ok(result);
