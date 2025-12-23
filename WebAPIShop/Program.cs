@@ -1,7 +1,7 @@
-﻿using Entitys;
+﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repository;
-using Servers;
+using Services;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);

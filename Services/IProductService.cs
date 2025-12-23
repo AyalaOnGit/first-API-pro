@@ -1,7 +1,7 @@
-﻿using Entitys;
+﻿using Entities;
 using Repository;
 
-namespace Servers
+namespace Services
 {
     public interface IProductService
     {

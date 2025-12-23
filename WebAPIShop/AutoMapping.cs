@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Entitys;
+using Entities;
 using DTOs;
 
 namespace WebAPIShop

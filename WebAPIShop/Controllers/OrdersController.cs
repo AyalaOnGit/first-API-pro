@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using Servers;
-using Entitys;
+using Services;
+using Entities;
 using Repository;
 
 

@@ -1,6 +1,6 @@
-﻿namespace Servers;
+﻿namespace Services;
 
-using Entitys;
+using Entities;
 using Repository;
 
 

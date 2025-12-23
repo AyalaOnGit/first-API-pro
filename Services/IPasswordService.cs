@@ -1,6 +1,6 @@
-﻿using Entitys;
+﻿using Entities;
 
-namespace Servers
+namespace Services
 {
     public interface IPasswordService
     {
