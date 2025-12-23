@@ -5,7 +5,7 @@ using Entitys;
 using Repository;
 
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace WebAPIShop.Controllers
 {
@@ -24,9 +24,9 @@ namespace WebAPIShop.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> Get(string? name, int[]? categories, int? nimPrice, int? maxPrice, int? limit, string? orderBy, int offset=1)
+        public async Task<ActionResult<List<Product>>> Get(string? name, int[]? categories, int? minPrice, int? maxPrice, int? limit, string? orderBy, int offset=1)
         {
-            List<Product> products = await _productService.GetProducts( name, categories,  nimPrice, maxPrice, limit,  orderBy,  offset);
+            List<Product> products = await _productService.GetProducts( name, categories,  minPrice, maxPrice, limit,  orderBy,  offset);
             if(products!=null)
             {
                 return Ok(products);

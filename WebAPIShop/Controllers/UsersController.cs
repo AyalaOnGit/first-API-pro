@@ -5,7 +5,6 @@ using Entitys;
 using Repository;
 
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPIShop.Controllers
 {
@@ -45,15 +44,16 @@ namespace WebAPIShop.Controllers
 
 
         [HttpPost("login")]
-        public  async Task<ActionResult<User>> Login([FromBody] LoginUser loginUser)
+        public async Task<ActionResult<User>> Login([FromBody] LoginUser loginUser)
         {
+            if (loginUser == null || string.IsNullOrWhiteSpace(loginUser.Email))
+                return BadRequest("Email is required");
             User user = await _userService.Login(loginUser);
             if (user != null)
             {
                 return Ok(user);
             }
-            return NoContent();
-            //return Unauthorized();
+            return Unauthorized("Invalid email or password");
         }
        
         [HttpPut("{id}")]
@@ -68,9 +68,12 @@ namespace WebAPIShop.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _userService.DeleteUser(id);
+            bool isDeleted = await _userService.DeleteUser(id);
+            if (!isDeleted)
+                return NotFound("User not found");
+            return NoContent();
         }
     }
 }
