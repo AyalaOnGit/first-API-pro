@@ -7,10 +7,10 @@ namespace Repository
 {
     public class UserRepository : IUserRepository
     {
-        db_shopContext _ShopContext;
-        public UserRepository(db_shopContext ShopContext)
+        private readonly DbShopContext _dbShopContext;
+        public UserRepository(DbShopContext dbShopContext)
         {
-            _ShopContext = ShopContext;
+            _dbShopContext = dbShopContext;
         }
 
         //public IEnumerable<string> Get()
@@ -20,28 +20,28 @@ namespace Repository
 
         public async Task<User> GetUserById(int id)
         {
-            return await _ShopContext.FindAsync<User>(id);
+            return await _dbShopContext.FindAsync<User>(id);
         }
 
 
         public async Task<User> AddUser(User user)
         {
-            await _ShopContext.Users.AddAsync(user);
-            await _ShopContext.SaveChangesAsync(); 
-            return await _ShopContext.Users.FindAsync(user.UserId);
+            await _dbShopContext.Users.AddAsync(user);
+            await _dbShopContext.SaveChangesAsync(); 
+            return await _dbShopContext.Users.FindAsync(user.UserId);
         }
 
 
         public async Task<User> Login(LoginUser loginUser)
         {
-            return await _ShopContext.Users.FirstOrDefaultAsync(x => x.UserEmail == loginUser.LoginUserEmail && x.Password == loginUser.LoginUserPassword);    
+            return await _dbShopContext.Users.FirstOrDefaultAsync(x => x.UserEmail == loginUser.LoginUserEmail && x.Password == loginUser.LoginUserPassword);    
         }
 
 
         public async Task UpdateUser(int id, User updatedUser)
         {
-            _ShopContext.Users.Update(updatedUser);
-            await _ShopContext.SaveChangesAsync();
+            _dbShopContext.Users.Update(updatedUser);
+            await _dbShopContext.SaveChangesAsync();
         }
 
 

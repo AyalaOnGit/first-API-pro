@@ -7,20 +7,20 @@ namespace Repository
 {
     public class OrderRepository : IOrderRepository
     {
-        db_shopContext _ShopContext;
-        public OrderRepository(db_shopContext ShopContext)
+        private readonly DbShopContext _dbShopContext;
+        public OrderRepository(DbShopContext dbShopContext)
         {
-            _ShopContext = ShopContext;
+            _dbShopContext = dbShopContext;
         }
         public async Task<Order> AddOrder(Order oreder)
         {
-            await _ShopContext.Orders.AddAsync(oreder);
-            await _ShopContext.SaveChangesAsync();
-            return await _ShopContext.FindAsync<Order>(oreder.OrderId);
+            await _dbShopContext.Orders.AddAsync(oreder);
+            await _dbShopContext.SaveChangesAsync();
+            return await _dbShopContext.FindAsync<Order>(oreder.OrderId);
         }
         public async Task<Order> GetOrderById(int id)
         {
-            return await _ShopContext.FindAsync<Order>(id);
+            return await _dbShopContext.FindAsync<Order>(id);
         }
 
     }

@@ -14,7 +14,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
-builder.Services.AddDbContext<db_shopContext>(option=>option.UseSqlServer
+builder.Services.AddDbContext<DbShopContext>(option=>option.UseSqlServer
 ("Data Source = srv2\\pupils; Initial Catalog = 215806571_shop; Integrated Security = True; Trust Server Certificate=True"));
 
 

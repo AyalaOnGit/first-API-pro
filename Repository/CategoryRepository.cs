@@ -7,14 +7,14 @@ namespace Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        db_shopContext _ShopContext;
-        public CategoryRepository(db_shopContext ShopContext)
+        private readonly DbShopContext _dbShopContext;
+        public CategoryRepository(DbShopContext dbShopContext)
         {
-            _ShopContext = ShopContext;
+            _dbShopContext = dbShopContext;
         }
         public async Task<List<Category>> GetCategories()
         {
-            return await _ShopContext.Categories.ToListAsync();
+            return await _dbShopContext.Categories.ToListAsync();
         }
 
     
