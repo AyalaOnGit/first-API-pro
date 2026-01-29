@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Entities;
 
-public partial class db_shopContext : DbContext
+public partial class DbShopContext : DbContext
 {
-    public db_shopContext(DbContextOptions<db_shopContext> options)
+    public DbShopContext(DbContextOptions<DbShopContext> options)
         : base(options)
     {
     }

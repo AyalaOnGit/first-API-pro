@@ -7,15 +7,15 @@ namespace Repository
 {
     public class ProductRepository : IProductRepository
     {
-        db_shopContext _ShopContext;
-        public ProductRepository(db_shopContext ShopContext)
+        private readonly DbShopContext _dbShopContext;
+        public ProductRepository(DbShopContext dbShopContext)
         {
-            _ShopContext = ShopContext;
+            _dbShopContext = dbShopContext;
         }
 
         public async Task<List<Product>> GetProducts(string? name, int[]? categories, int? nimPrice, int? maxPrice, int? limit, string? orderBy, int? offset)
         {
-            return await _ShopContext.Products.ToListAsync();
+            return await _dbShopContext.Products.ToListAsync();
         }
         
     }
